@@ -6,7 +6,7 @@
             </div>
         </div>
         <div class="search-bar">
-            <form>
+            <form @submit.prevent="filterStudents()">
                 <div class="input-field">
                     <i class="material-icons prefix">search</i>
                     <input id="search" type="text" class="validate" @keyup="filterStudents()" v-model="studentData" placeholder="Search by id or name">
