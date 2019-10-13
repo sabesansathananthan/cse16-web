@@ -1,18 +1,58 @@
 <template>
     <div class="row">
-        <img class="home-img" src="@/assets/1.jpg" alt="">
+        <h3 class="home-title">
+            The official web site of 2016 batch of Computer Science and Engineering of University of Moratuwa    
+        </h3>
+        <div class="home-button center">
+                <button class="waves-effect waves-light blue btn" v-if="!user" @click="signin()">Sign in</button>
+                <router-link class="waves-effect waves-light blue btn" :to="{ name: 'Results' }" v-if="user">View Results</router-link>
+        </div>
+        
     </div>
 </template>
 
 <script>
+import firebase from 'firebase'
 export default {
-    name: 'Home'
+    name: 'Home',
+    data() {
+        return {
+            user: null
+        }
+    },
+     methods: {
+        signin() {
+            var provider = new firebase.auth.GoogleAuthProvider()
+            firebase.auth().signInWithRedirect(provider);
+            firebase.auth().getRedirectResult().then(result => {
+                if (result.credential) {
+                    var token = result.credential.accessToken
+                }
+                var user = result.user
+            }).catch(error => {
+                var errorCode = error.code
+                var errorMessage = error.message
+                var email = error.email
+                var credential = error.credential
+            })
+        }
+    },
+    created() {
+        const user = firebase.auth().currentUser
+        if(user) {
+            this.user = user
+        } else {
+            this.user = null
+        }
+    }
 }
 </script>
 
 <style>
-.home-img {
-    height: auto;
-    width: 100%;
+.home-title {
+    text-align: center;
+}
+.home-button {
+    padding: 50px;
 }
 </style>

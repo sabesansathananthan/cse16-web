@@ -1,9 +1,9 @@
 <template>
     <div>
         <div class="navbar-fixed">
-            <nav class="blue  accent-4">
+            <nav class="blue accent-4">
                 <div class="nav-wrapper">
-                    <a href="#" class="brand-logo">CSE 16<span class="new badge" data-badge-caption="beta"></span></a>
+                    <router-link :to="{ name: 'Home'}" class="brand-logo">CSE 16<span class="new badge" data-badge-caption="beta"></span></router-link>
                     <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
                     <ul id="nav-mobile" class="right hide-on-med-and-down">
                         <li><router-link :to="{ name: 'Home'}">Home</router-link></li>
@@ -94,6 +94,9 @@ nav {
 }
 .router-link-exact-active {
     background-color: #2979ff;
+}
+.brand-logo {
+    background-color: #2962ff;
 }
 </style>
 

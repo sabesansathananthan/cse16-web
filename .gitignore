@@ -1,7 +1,8 @@
 .DS_Store
+dist/
 node_modules/
-/dist/
 src/firebase/init.js
+updater/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*

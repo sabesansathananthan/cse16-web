@@ -1,8 +1,8 @@
 <template>
     <footer class="page-footer white">
-        <div class="footer-copyright indigo darken-4">
+        <div class="footer-copyright blue accent-4">
             <div class="container center white-text">
-                All rights reserved © 2019
+                All Rights Reserved © 2019
             </div>
         </div>
     </footer>
@@ -14,7 +14,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style>
 body {
     display: flex;
     min-height: 100vh;
