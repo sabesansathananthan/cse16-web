@@ -9,7 +9,6 @@
                         <li><router-link :to="{ name: 'Home'}">Home</router-link></li>
                         <li><router-link :to="{ name: 'Blogs'}">Blogs</router-link></li>
                         <li v-if="user"><router-link :to="{ name: 'Students'}">Students</router-link></li>
-                        <li v-if="admin"><router-link :to="{ name: 'Resources' }">Resources</router-link></li>
                         <li v-if="user"><router-link :to="{ name: 'Results' }">Results</router-link></li>
                         <li v-if="!user"><a @click="signin()">Sign in</a></li>
                         <li v-if="user"><a @click="signout()">Sign out</a></li>
@@ -21,7 +20,6 @@
             <li><router-link :to="{ name: 'Home' }" class="sidenav-close">Home</router-link></li>
             <li><router-link :to="{ name: 'Blogs' }" class="sidenav-close">Blogs</router-link></li>            
             <li v-if="user"><router-link :to="{ name: 'Students' }" class="sidenav-close">Students</router-link></li>
-            <li v-if="admin"><router-link :to="{ name: 'Resources' }" class="sidenav-close">Resources</router-link></li>
             <li v-if="user"><router-link :to="{ name: 'Results' }" class="sidenav-close">Results</router-link></li>
             <li><div class="divider"></div></li>
             <li v-if="!user"><a @click="signin()" class="sidenav-close">Sign in</a></li>
@@ -59,7 +57,6 @@ export default {
         signout() {
             firebase.auth().signOut().then(() => {
                 this.$router.push({ name: 'Home'})
-                M.toast({html: 'Signed out successfully!', classes: 'teal', displayLength: 1000});
             }).catch(error => {
                 console.log(error)
             })

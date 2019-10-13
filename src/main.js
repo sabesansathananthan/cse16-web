@@ -10,6 +10,9 @@ let app = null
 
 // wait for firebase auth to init before creating the app
 firebase.auth().onAuthStateChanged(user => {
+    if (user && !user.email.includes('16@cse.mrt.ac.lk')) {
+        firebase.auth().signOut()
+    }
     if(!app) {
         new Vue({
             el: '#app',
@@ -18,7 +21,13 @@ firebase.auth().onAuthStateChanged(user => {
             template: '<App/>'
         })
     }
-    if(user) {        
-        M.toast({html: 'Signed in successfully!', classes: 'teal', displayLength: 1000});
+    if (user) {
+        if (user.email.includes('16@cse.mrt.ac.lk')) {        
+            M.toast({html: 'Signed in successfully!', classes: 'teal', displayLength: 1000});
+        } else {
+            M.toast({html: 'Signin failed!', classes: 'red', displayLength: 1000});
+        }
+    } else {
+        M.toast({html: 'Signed out successfully!', classes: 'teal', displayLength: 1000});
     }
 })

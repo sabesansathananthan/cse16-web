@@ -39,7 +39,7 @@ export default {
     },
     created() {
         const user = firebase.auth().currentUser
-        if(user) {
+        if(user.email.includes('16@cse.mrt.ac.lk')) {
             this.user = user
         } else {
             this.user = null
