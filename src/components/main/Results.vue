@@ -1,6 +1,6 @@
 <template>
     <div class="row">
-        <div  v-if="!results && !moduleTitles">
+        <div  v-if="!results || !moduleTitles">
             <div class="progress">
                 <div class="indeterminate"></div>
             </div>
@@ -20,7 +20,7 @@
             </ul>
         </div>
         <div class="results" :id="'sem' + semester" v-for="semester in semesters" :key="semester">
-            <div class="col s12" v-if="results && moduleTitles">
+            <div class="col s12" v-if="results || moduleTitles">
                 <ul>
                     <li>Semester: {{ semester }}</li>
                     <li>S-GPA: {{ sgpa['semester'.concat(semester)] }}</li>

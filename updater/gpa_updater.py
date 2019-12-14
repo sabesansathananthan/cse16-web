@@ -14,9 +14,11 @@ db = firestore.client()
 students_ref = db.collection(u'students')
 modules_ref = db.collection(u'modules')
 
+# store the list of credits of gpa modules
 credits = {}
 for module in modules_ref.stream():
-  credits[module.id] = module.get('credits')
+  if module.get('gpa'):
+    credits[module.id] = module.get('credits')
 
 grade_points = {
   "A+": 4.2,
@@ -37,29 +39,40 @@ grade_points = {
 }
 
 i = 0
+
 for student in students_ref.stream():
   total_semester_points = 0
   total_semester_credits = 0
+  sgpas = {}
   for semester in student.get('results'):
     semester_points = 0
     semester_credits = 0
     for module in student.get('results').get(semester):
-      semester_points += credits[module] * grade_points[student.get('results').get(semester).get(module)]
-      semester_credits += credits[module]
+      if module in credits:
+        semester_points += credits[module] * grade_points[student.get('results').get(semester).get(module)]
+        semester_credits += credits[module]
     sgpa = 0
     if (semester_credits):
       sgpa = semester_points / semester_credits
-    students_ref.document(student.get('email')).update({
-      u'sgpa.%s' % semester: float('%.4f' % sgpa)
-    })
+    sgpas[semester] = sgpa
     total_semester_points += semester_points
     total_semester_credits += semester_credits
   cgpa = total_semester_points/total_semester_credits
   students_ref.document(student.get('email')).update({
-    u'cgpa': float('%.4f' % cgpa)
+    u'cgpa': float('%.2f' % cgpa),
+    u'sgpa': {
+      u'semester1': float('%.2f' % sgpas['semester1']),
+      u'semester2': float('%.2f' % sgpas['semester2']),
+      u'semester3': float('%.2f' % sgpas['semester3']),
+      u'semester4': float('%.2f' % sgpas['semester4']),
+      u'semester5': float('%.2f' % sgpas['semester5']),
+      u'semester6': float('%.2f' % sgpas['semester6']),
+      u'semester7': float('%.2f' % sgpas['semester7']),
+      u'semester8': float('%.2f' % sgpas['semester8']),
+    }
   })
   i += 1
-  print('%3i %s: %.4f' %(i, student.get('id'), cgpa))
+  print('%3i %s: %.2f' %(i, student.get('id'), cgpa))
 
 
 stop = time.time()

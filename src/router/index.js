@@ -1,11 +1,13 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 
+import Blogs from '@/components/main/Blogs'
 import Home from '@/components/main/Home'
+import Profile from '@/components/main/Profile'
+import Resources from '@/components/main/Resources'
 import Results from '@/components/main/Results'
 import Students from '@/components/main/Students'
-import Resources from '@/components/main/Resources'
-import Blogs from '@/components/main/Blogs'
+
 import firebase from 'firebase'
 
 Vue.use(Router)
@@ -17,6 +19,14 @@ const router = new Router({
         path: '/',
         name: 'Home',
         component: Home
+      },
+      {
+        path: '/profile',
+        name: 'Profile',
+        component: Profile,
+        meta: {
+          requiresAuth: true
+        }
       },
       {
         path: '/results',
